@@ -33,9 +33,3 @@ $page = $_GET['page'];
 echo $page;*/
 
 ?>
-
-<a href="show.php?name=<?php echo u('John Doe'); ?>">Link</a><br />
-<a href="show.php?company=<?php echo u('Widgets&More'); ?>">Link</a><br />
-<a href="show.php?name=<?php echo u('!#*?'); ?>">Link</a><br />
-
-
