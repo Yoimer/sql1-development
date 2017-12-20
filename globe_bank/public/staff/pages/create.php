@@ -25,17 +25,17 @@ if(is_post_request()) {
 
 ?>
 
-<?php $page_title = 'Create Subject'; ?>
+<?php $page_title = 'Create Pages'; ?>
 <?php include(SHARED_PATH . '/staff_header.php'); ?>
 
 <div id="content">
 
-    <a class="back-link" href="<?php echo url_for('/staff/subjects/index.php'); ?>">&laquo; Back to List</a>
+    <a class="back-link" href="<?php echo url_for('/staff/pages/index.php'); ?>">&laquo; Back to List</a>
 
-    <div class="subject Create">
-        <h1>Create Subject</h1>
+    <div class="page create">
+        <h1>Create Page</h1>
 
-        <form action="<?php echo url_for('/staff/subjects/new.php?'); ?>" method="post">
+        <form action="<?php echo url_for('/staff/pages/new.php?'); ?>" method="post">
             <dl>
                 <dt>Menu Name</dt>
                 <dd><input type="text" name="menu_name" value="<?php echo $menu_name; ?>" /></dd>
@@ -59,7 +59,7 @@ if(is_post_request()) {
             </dl>
 
             <div id="operations">
-                <input type="submit" value="Create Subject" />
+                <input type="submit" value="Create Pages" />
             </div>
         </form>
 
