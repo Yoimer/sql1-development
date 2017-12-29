@@ -2,39 +2,31 @@
 
 require_once('../../../private/initialize.php');
 
-/* if id is not present, just redirect to index */
-
 if(!isset($_GET['id'])) {
-	redirect_to(url_for('/staff/subjects/index.php'));
+  redirect_to(url_for('/staff/subjects/index.php'));
 }
-
-/* initialization   */
-
 $id = $_GET['id'];
-
-/* if not post request, just show page */
 
 if(is_post_request()) {
 
-    // Handle form values sent by new.php
-		$subject = [];
-		$subject['id'] = $id;
-    $subject['menu_name'] = isset($_POST['menu_name']) ? $_POST['menu_name'] : 'DEFAULT VALUE';
-    $subject['position'] = isset($_POST['position']) ? $_POST['position'] : 'DEFAULT VALUE';
-    $subject['visible'] = isset($_POST['visible']) ? $_POST['visible'] : 'DEFAULT VALUE';
+  // Handle form values sent by new.php
 
-		$result = update_subject($subject);
-		redirect_to(url_for('/staff/subjects/show.php?id=' . $id));
-}		else {
+  $subject = [];
+  $subject['id'] = $id;
+  $subject['menu_name'] = isset($_POST['menu_name']) ? $_POST['menu_name'] : 'DEFAULT VALUE';
+  $subject['position'] = isset($_POST['position']) ? $_POST['position'] : 'DEFAULT VALUE';
+  $subject['visible'] = isset($_POST['visible']) ? $_POST['visible'] : 'DEFAULT VALUE';
 
-		$subject = find_subject_by_id($id);
+  $result = update_subject($subject);
+  redirect_to(url_for('/staff/subjects/show.php?id=' . $id));
 
-		// find all the records in the database
-		$subject_set = find_all_subjects();
-		// count how many rows there are on subjects
-		$subject_count = mysqli_num_rows($subject_set);
-		// release memory
-		mysqli_free_result($subject_set);
+} else {
+
+  $subject = find_subject_by_id($id);
+
+  $subject_set = find_all_subjects();
+  $subject_count = mysqli_num_rows($subject_set);
+  mysqli_free_result($subject_set);
 
 }
 
@@ -45,48 +37,45 @@ if(is_post_request()) {
 
 <div id="content">
 
-    <a class="back-link" href="<?php echo url_for('/staff/subjects/index.php'); ?>">&laquo; Back to List</a>
+  <a class="back-link" href="<?php echo url_for('/staff/subjects/index.php'); ?>">&laquo; Back to List</a>
 
-    <div class="subject edit">
-        <h1>Edit Subject</h1>
+  <div class="subject edit">
+    <h1>Edit Subject</h1>
 
-        <form action="<?php echo url_for('/staff/subjects/edit.php?id=' . h(u($id))); ?>" method="post">
-            <dl>
-                <dt>Menu Name</dt>
-                <dd><input type="text" name="menu_name" value="<?php echo h($subject['menu_name']); ?>" /></dd>
-            </dl>
+    <form action="<?php echo url_for('/staff/subjects/edit.php?id=' . h(u($id))); ?>" method="post">
+      <dl>
+        <dt>Menu Name</dt>
+        <dd><input type="text" name="menu_name" value="<?php echo h($subject['menu_name']); ?>" /></dd>
+      </dl>
+      <dl>
+        <dt>Position</dt>
+        <dd>
+          <select name="position">
+          <?php
+            for($i=1; $i <= $subject_count; $i++) {
+              echo "<option value=\"{$i}\"";
+              if($subject["position"] == $i) {
+                echo " selected";
+              }
+              echo ">{$i}</option>";
+            }
+          ?>
+          </select>
+        </dd>
+      </dl>
+      <dl>
+        <dt>Visible</dt>
+        <dd>
+          <input type="hidden" name="visible" value="0" />
+          <input type="checkbox" name="visible" value="1"<?php if($subject['visible'] == "1") { echo " checked"; } ?> />
+        </dd>
+      </dl>
+      <div id="operations">
+        <input type="submit" value="Edit Subject" />
+      </div>
+    </form>
 
-            <dl>
-                <dt>Position</dt>
-                <dd>
-                    <select name="position">
-											<?php
-												for($i=1; $i <= $subject_count; $i++) {
-													echo "<option value=\"{$i}\"";
-													if($subject["position"] == $i) {
-														echo " selected";
-													}
-													echo ">{$i}</option>";
-												}
-											?>
-										</select>
-                </dd>
-            </dl>
-
-            <dl>
-                <dt>Visible</dt>
-                <dd>
-                    <input type="hidden" name="visible" value="0" />
-                    <input type="checkbox" name="visible" value="1"<?php if($subject['visible'] == "1") { echo " checked"; } ?> />
-                </dd>
-            </dl>
-
-            <div id="operations">
-                <input type="submit" value="Edit Subject" />
-            </div>
-        </form>
-
-    </div>
+  </div>
 
 </div>
 
