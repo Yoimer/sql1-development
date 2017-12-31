@@ -62,7 +62,7 @@
   function insert_subject($subject) {
     global $db;
 
-    $errors = validate_subjects($subject);
+    $errors = validate_subject($subject);
     if(!empty($errors)) {
       return $errors;
     }
