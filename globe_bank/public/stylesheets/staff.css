@@ -118,8 +118,8 @@ dd {
 
 .errors {
   display: inline-block;
-  border: 2px solid red;
-  color: red;
+  border: 2px solid #1E90FF; /* DodgerBlue similar to blue */
+  color: #B22222; /* FireBrick similar to red */
   padding: 1em;
   margin-bottom: 1em;
 }
