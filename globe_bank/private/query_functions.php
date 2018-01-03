@@ -160,6 +160,11 @@
   function insert_page($page) {
     global $db;
 
+    $errors = validate_page($page);
+    if(!empty($errors)) {
+      return $errors;
+    }
+
     $sql = "INSERT INTO pages ";
     $sql .= "(subject_id, menu_name, position, visible, content) ";
     $sql .= "VALUES (";
@@ -184,6 +189,11 @@
   function update_page($page) {
     global $db;
 
+    $errors = validate_page($page);
+    if(!empty($errors)) {
+      return $errors;
+    }
+
     $sql = "UPDATE pages SET ";
     $sql .= "subject_id='" . $page['subject_id'] . "', ";
     $sql .= "menu_name='" . $page['menu_name'] . "', ";
@@ -204,6 +214,56 @@
       exit;
     }
 
+  }
+
+  function validate_page($page) {
+
+    $errors = [];
+  
+    // subject_id
+    if(is_blank($page['subject_id'])) {
+      $errors[] = "Subject cannot be blank.";
+    }
+
+    // menu_name
+    if(is_blank($page['menu_name'])) {
+      $errors[] = "Name cannot be blank.";
+      //database will only hold strings that are 255 characters long
+    } elseif(!has_length($page['menu_name'], ['min' => 2, 'max' => 255])) {
+        $errors[] = "Name must be between 2 and 255 characters.";
+    }
+
+    $current_id = isset($page['id']) ? $page['id'] : 'DEFAULT VALUE';
+    if(!has_unique_page_menu_name($page['menu_name'], $current_id)) {
+      $errors[] = "Menu name must be unique";
+    }
+
+    // position
+    // Make sure we are working with an integer
+    // position on database can only be 3 digits long
+    $postion_int = (int) $page['position'];
+    if($postion_int <= 0) {
+      $errors[] = "Position must be greater than zero.";
+    }
+    if($postion_int > 999) {
+      $errors[] = "Position must be less than 999.";
+    }
+
+    // visible
+    // Make sure we are working with a string
+    // can only be zero or one
+    $visible_str = (string) $page['visible'];
+    if(!has_inclusion_of($visible_str, ["0","1"])) {
+      $errors[] = "Visible must be true or false.";
+    }
+
+    // content
+    // It is a text field, in mysql it can have almost unlimited content itself
+    if(is_blank($page['content'])){
+      $errors[] = "Content cannot be blank";
+    }
+
+    return $errors;
   }
 
   function delete_page($id) {

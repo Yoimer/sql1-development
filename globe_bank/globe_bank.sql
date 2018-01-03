@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 26, 2017 at 09:53 PM
+-- Generation Time: Jan 02, 2018 at 10:32 PM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS `pages` (
   `content` text,
   PRIMARY KEY (`id`),
   KEY `fk_subject_id` (`subject_id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=11 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=12 ;
 
 --
 -- Dumping data for table `pages`
@@ -51,7 +51,8 @@ INSERT INTO `pages` (`id`, `subject_id`, `menu_name`, `position`, `visible`, `co
 (7, 2, 'Mortgages', 3, 1, NULL),
 (8, 3, 'Checking', 1, 1, NULL),
 (9, 3, 'Loans', 2, 1, NULL),
-(10, 3, 'Merchant Services', 3, 1, NULL);
+(10, 3, 'Merchant Services', 3, 1, NULL),
+(11, 1, 'PHP', 11, 1, 'My text was saved at 20:32 January 2 2018');
 
 -- --------------------------------------------------------
 
@@ -65,18 +66,19 @@ CREATE TABLE IF NOT EXISTS `subjects` (
   `position` int(3) DEFAULT NULL,
   `visible` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=9 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=21 ;
 
 --
 -- Dumping data for table `subjects`
 --
 
 INSERT INTO `subjects` (`id`, `menu_name`, `position`, `visible`) VALUES
-(1, 'Globe Bank', 1, 1),
-(2, 'Consumer', 2, 1),
-(3, 'Small Business', 3, 0),
-(6, 'Commercial', 1, 1),
-(8, 'Junk', 1, 1);
+(1, 'About Globe Bank', 1, 1),
+(2, 'Consumer', 4, 1),
+(3, 'Small Business', 2, 1),
+(6, 'Commercial', 3, 1),
+(8, 'Junk', 5, 1),
+(20, 'C Programming Language', 6, 1);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
