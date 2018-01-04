@@ -15,8 +15,7 @@
             echo "OFF";
             break;    
         default:
-            //echo "Check string!!";
-            //break;
-            echo $id;
+            echo "Check string!!";
+            break;
         }
 ?>
