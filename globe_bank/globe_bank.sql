@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Jan 04, 2018 at 11:46 AM
+-- Generation Time: Jan 04, 2018 at 01:09 PM
 -- Server version: 5.5.27
 -- PHP Version: 5.4.7
 
@@ -30,7 +30,14 @@ CREATE TABLE IF NOT EXISTS `alexa` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `status` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=latin1 AUTO_INCREMENT=2 ;
+
+--
+-- Dumping data for table `alexa`
+--
+
+INSERT INTO `alexa` (`id`, `status`) VALUES
+(1, 'OK');
 
 -- --------------------------------------------------------
 
