@@ -18,7 +18,7 @@
 
     $sql = "SELECT * FROM subjects ";
     $sql .= "WHERE id='" . db_escape($db, $id). "'";
-    echo $sql;
+    //echo $sql; for debugging
     $result = mysqli_query($db, $sql);
     confirm_result_set($result);
     $subject = mysqli_fetch_assoc($result);
@@ -29,7 +29,7 @@
   function validate_subject($subject) {
 
     $errors = [];
-  
+
     // menu_name
     if(is_blank($subject['menu_name'])) {
       $errors[] = "Name cannot be blank.";
@@ -150,7 +150,7 @@
     global $db;
 
     $sql = "SELECT * FROM pages ";
-    $sql .= "WHERE id='" . $id . "'";
+    $sql .= "WHERE id='" . db_escape($db, $id) . "'";
     $result = mysqli_query($db, $sql);
     confirm_result_set($result);
     $page = mysqli_fetch_assoc($result);
@@ -169,11 +169,11 @@
     $sql = "INSERT INTO pages ";
     $sql .= "(subject_id, menu_name, position, visible, content) ";
     $sql .= "VALUES (";
-    $sql .= "'" . $page['subject_id'] . "',";
-    $sql .= "'" . $page['menu_name'] . "',";
-    $sql .= "'" . $page['position'] . "',";
-    $sql .= "'" . $page['visible'] . "',";
-    $sql .= "'" . $page['content'] . "'";
+    $sql .= "'" . db_escape($db, $page['subject_id']) . "',";
+    $sql .= "'" . db_escape($db, $page['menu_name']) . "',";
+    $sql .= "'" . db_escape($db, $page['position']) . "',";
+    $sql .= "'" . db_escape($db, $page['visible']) . "',";
+    $sql .= "'" . db_escape($db, $page['content']) . "'";
     $sql .= ")";
     $result = mysqli_query($db, $sql);
     // For INSERT statements, $result is true/false
@@ -196,12 +196,12 @@
     }
 
     $sql = "UPDATE pages SET ";
-    $sql .= "subject_id='" . $page['subject_id'] . "', ";
-    $sql .= "menu_name='" . $page['menu_name'] . "', ";
-    $sql .= "position='" . $page['position'] . "', ";
-    $sql .= "visible='" . $page['visible'] . "', ";
-    $sql .= "content='" . $page['content'] . "' ";
-    $sql .= "WHERE id='" . $page['id'] . "' ";
+    $sql .= "subject_id='" . db_escape($db, $page['subject_id']) . "', ";
+    $sql .= "menu_name='" . db_escape($db, $page['menu_name']) . "', ";
+    $sql .= "position='" . db_escape($db, $page['position']) . "', ";
+    $sql .= "visible='" . db_escape($db, $page['visible']) . "', ";
+    $sql .= "content='" . db_escape($db, $page['content']) . "' ";
+    $sql .= "WHERE id='" . db_escape($db, $page['id']) . "' ";
     $sql .= "LIMIT 1";
 
     $result = mysqli_query($db, $sql);
@@ -220,7 +220,7 @@
   function validate_page($page) {
 
     $errors = [];
-  
+
     // subject_id
     if(is_blank($page['subject_id'])) {
       $errors[] = "Subject cannot be blank.";
@@ -271,7 +271,7 @@
     global $db;
 
     $sql = "DELETE FROM pages ";
-    $sql .= "WHERE id='" . $id . "' ";
+    $sql .= "WHERE id='" . db_escape($db, $id) . "' ";
     $sql .= "LIMIT 1";
     $result = mysqli_query($db, $sql);
 
