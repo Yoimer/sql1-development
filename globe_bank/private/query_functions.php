@@ -286,4 +286,16 @@
     }
   }
 
+  // Alexa
+
+  function actual_status() {
+    global $db;
+
+    $sql = "SELECT status FROM alexa ";
+    $result = mysqli_query($db, $sql);
+    confirm_result_set($result);
+    return $result;
+  }
+
+
 ?>
