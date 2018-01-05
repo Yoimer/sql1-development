@@ -297,5 +297,49 @@
     return $result;
   }
 
+  function update_status($value) {
+    global $db;
+
+    // declare empty assoc array
+    $alexa = [];
+
+    // check value from get request
+    switch ($value) {
+        case '7':
+            $alexa['status'] = 'ON';
+            break;
+        case '8':
+            $alexa['status'] = 'OFF';
+            //echo $alexa['status'];
+            break;
+        case '9':
+             $alexa['status'] = 'OK';
+            break;    
+        default:
+            // reads default st
+            //echo "Check string!!";
+            break;
+        }
+
+    // check that alexa has got 7, 8 or 9 as value
+    if(!empty($alexa)) {
+
+      $sql = "UPDATE alexa SET ";
+      $sql .= "status='" . db_escape($db, $alexa['status']) . "' ";
+      $sql .= "WHERE id='1' ";
+      $sql .= "LIMIT 1";
+
+      $result = mysqli_query($db, $sql);
+      // For UPDATE statements, $result is true/false
+      if($result) {
+        return true;
+      } else {
+        // UPDATE failed
+        echo mysqli_error($db);
+        db_disconnect($db);
+        exit;
+      }
+    }
+  }
 
 ?>
